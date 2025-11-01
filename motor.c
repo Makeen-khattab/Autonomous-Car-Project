@@ -27,13 +27,13 @@ void DcMotor_Rotate(DcMotor_State state,uint8 speed,PWM_Timer timer)
 		{
 			GPIO_writePin(DCMOTOR1_PORTID,DCMOTOR1_PIN1ID, LOGIC_LOW);
 			GPIO_writePin(DCMOTOR1_PORTID,DCMOTOR1_PIN2ID, LOGIC_LOW);
-			PWM_Timer0_deInit();
+			PWM_Timer0_start();
 		}	
 		else if(timer == TIMER2)
 		{
 			GPIO_writePin(DCMOTOR2_PORTID,DCMOTOR2_PIN1ID, LOGIC_LOW);
 			GPIO_writePin(DCMOTOR2_PORTID,DCMOTOR2_PIN2ID, LOGIC_LOW);
-			PWM_Timer2_deInit();
+			PWM_Timer2_start();
 		}
 
 		break;
@@ -42,13 +42,13 @@ void DcMotor_Rotate(DcMotor_State state,uint8 speed,PWM_Timer timer)
 		{
 			GPIO_writePin(DCMOTOR1_PORTID,DCMOTOR1_PIN1ID, LOGIC_LOW);
 			GPIO_writePin(DCMOTOR1_PORTID,DCMOTOR1_PIN2ID, LOGIC_HIGH);
-			PWM_Timer0_deInit();
+			PWM_Timer0_start();
 		}	
 		else if(timer == TIMER2)
 		{
 			GPIO_writePin(DCMOTOR2_PORTID,DCMOTOR2_PIN1ID, LOGIC_LOW);
 			GPIO_writePin(DCMOTOR2_PORTID,DCMOTOR2_PIN2ID, LOGIC_HIGH);
-			PWM_Timer2_deInit();
+			PWM_Timer2_start();
 		}
 		break;		
 	case DCMOTOR_CW :
@@ -56,13 +56,13 @@ void DcMotor_Rotate(DcMotor_State state,uint8 speed,PWM_Timer timer)
 		{
 			GPIO_writePin(DCMOTOR1_PORTID,DCMOTOR1_PIN1ID, LOGIC_HIGH);
 			GPIO_writePin(DCMOTOR1_PORTID,DCMOTOR1_PIN2ID, LOGIC_LOW);
-			PWM_Timer0_deInit();
+			PWM_Timer0_start();
 		}	
 		else if(timer == TIMER2)
 		{
 			GPIO_writePin(DCMOTOR2_PORTID,DCMOTOR2_PIN1ID, LOGIC_HIGH);
 			GPIO_writePin(DCMOTOR2_PORTID,DCMOTOR2_PIN2ID, LOGIC_LOW);
-			PWM_Timer2_deInit();
+			PWM_Timer2_start();
 		}
 		break;
 	default:
@@ -78,5 +78,4 @@ void DcMotor_Rotate(DcMotor_State state,uint8 speed,PWM_Timer timer)
 	}
 
 }
-
 
