@@ -24,13 +24,19 @@ if( a_dutyCycle==0)
 }
 else
 {
-TCCR0=(TCCR0&0xF8) |((PRESCALER_8)& 0x07);
+TCCR0=(TCCR0&0xF8) |((PRESCALER_1)& 0x07);
 
 TCNT0 =0;
 
 OCR0= (uint16)(a_dutyCycle * MAXCOUNT) /100;
 }
 
+}
 
+void PWM_Timer0_deInit(void)
+{
+	TCNT0 =0;
+	TCCR0=0;
+	OCR0=0;
 }
 
