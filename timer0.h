@@ -27,7 +27,6 @@
 
 
 void PWM_Timer0_init(void);
-void PWM_Timer0_deInit(void);
 void PWM_Timer0_Start(uint8 a_dutyCycle);
 
 

@@ -32,7 +32,7 @@ typedef enum
 
 
 
-void void DcMotor_Init(PWM_Timer timer);
+void DcMotor_Init(PWM_Timer timer);
 /*Speed ranges from 0% --> 100% */
 void DcMotor_Rotate(DcMotor_State state,uint8 speed,PWM_Timer timer);
 
