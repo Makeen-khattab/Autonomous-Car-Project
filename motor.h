@@ -8,11 +8,11 @@
 #define MOTOR_H_
 
 #include "Std_Types.h"
-#define DCMOTOR1_PORTID					PORTA_ID
-#define DCMOTOR1_PIN1ID					PIN0_ID
-#define DCMOTOR1_PIN2ID					PIN1_ID
+#define DCMOTOR1_PORTID					PORTB_ID
+#define DCMOTOR1_PIN1ID					PIN1_ID
+#define DCMOTOR1_PIN2ID					PIN2_ID
 
-#define DCMOTOR2_PORTID					PORTB_ID
+#define DCMOTOR2_PORTID					PORTC_ID
 #define DCMOTOR2_PIN1ID					PIN0_ID
 #define DCMOTOR2_PIN2ID					PIN1_ID
 
@@ -32,7 +32,7 @@ typedef enum
 
 
 
-void void DcMotor_Init(PWM_Timer timer);
+void DcMotor_Init(PWM_Timer timer);
 /*Speed ranges from 0% --> 100% */
 void DcMotor_Rotate(DcMotor_State state,uint8 speed,PWM_Timer timer);
 

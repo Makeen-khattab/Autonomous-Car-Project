@@ -3,6 +3,8 @@
 #include "motor.h" 
 #include "Std_Types.h"
 
+#define FULLSPEED				100
+
 typedef enum{
     Stop='S',
 	Forward='F',
@@ -10,6 +12,8 @@ typedef enum{
 	Right='R',
 	Left='L',
 }CAR_Direction;
+
+
 
 
 void Car_Init(void);

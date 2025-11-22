@@ -1,6 +1,7 @@
 #include "motor.h"
 #include "gpio.h"
 #include "timer0.h"
+#include "timer2.h"
 
 void DcMotor_Init(PWM_Timer timer)
 {
@@ -68,10 +69,12 @@ void DcMotor_Rotate(DcMotor_State state,uint8 speed,PWM_Timer timer)
 	}
 	if(timer == TIMER0 && state != DCMOTOR_STOP)
 	{
+		PWM_Timer0_init();
 		PWM_Timer0_Start(speed);
 	}
 	else if(timer == TIMER2 && state != DCMOTOR_STOP)
 	{
+		PWM_Timer2_init();
 		PWM_Timer2_Start(speed);
 	}
 
