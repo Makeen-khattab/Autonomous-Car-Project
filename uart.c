@@ -10,8 +10,8 @@ void (*g_setCallBack_Ptr)(void)=NULL;
 #endif
 void UART_init(UART_ConfigType*config_ptr)
 {
-	GPIO_setupPinDirection(PORTD_ID, PIN0_ID, PIN_INPUT);
-	GPIO_setupPinDirection(PORTD_ID, PIN1_ID,PIN_OUTPUT);
+	//GPIO_setupPinDirection(PORTD_ID, PIN0_ID, PIN_INPUT);
+	//GPIO_setupPinDirection(PORTD_ID, PIN1_ID,PIN_OUTPUT);
 	uint16 a_valueInUBBRH=0;
 /* Choosing the the transmitting & Receiving Mode of UART
  *
@@ -20,30 +20,41 @@ void UART_init(UART_ConfigType*config_ptr)
  *
  * */
 #if(UART_DOUBLESPEEDMODE)
-SET_BIT(UCSRA,U2X);
+SET_BIT(UCSRA,1);
 #elif(UART_NORMALMODE)
-CLEAR_BIT(UCSRA,U2X);
+CLEAR_BIT(UCSRA,1);
 #endif
 
+/*Enable writing on UCSRC*/
+//SET_BIT(UCSRC,7);
 /* using asynchronous mode of USART	*/
-SET_BIT(UCSRC,URSEL);
+//CLEAR_BIT(UCSRC,6);
+/*
+UCSRC = ((1<<7) | (UCSRC&(0xCF)) | ((config_ptr->parity)<<4));
+UCSRC = ((1<<7) | (UCSRC&(0xF7)) | ((config_ptr->stop_bit)<<3));
+UCSRC = ((1<<7) | (UCSRC&(0xF9)) | (((config_ptr->bit_data)&(0x03))<<1));
+*/
 
-CLEAR_BIT(UCSRC,UMSEL);
-UCSRC = ((UCSRC&(0xCF)) | ((config_ptr->parity)<<4));
-UCSRC = ((UCSRC&(0xF7)) | ((config_ptr->stop_bit)<<3));
-UCSRC = ((UCSRC&(0xF9)) | (((config_ptr->bit_data)&(0x03))<<1));
+UCSRC = (1<<7) |
+        (config_ptr->parity << 4) |
+        (config_ptr->stop_bit << 3) |
+        ((config_ptr->bit_data & 0x03) << 1);
+
+
 UCSRB = ((UCSRB&(0xFB)) | ((config_ptr->bit_data)&(0x04)));
 
 /* Enabling the Receive Complete interrupt Enable */
 #if (UART_INTERRUPTMODE == 1)
-SET_BIT(UCSRB,RXCIE);
+SET_BIT(UCSRB,7);
 #endif
-SET_BIT(UCSRB,TXEN);
-SET_BIT(UCSRB,RXEN);
-CLEAR_BIT(UBRRH,URSEL);
+/*RXEN*/
+SET_BIT(UCSRB,3);
+/*TXEN*/
+SET_BIT(UCSRB,4);
+
 
 #if(UART_DOUBLESPEEDMODE)
-a_valueInUBBRH = (uint16)((F_CPU /(8UL*(config_ptr->baud_rate)))-1);
+a_valueInUBBRH = (uint16)((F_CPU / (8UL * config_ptr->baud_rate)) - 1);
 #elif(UART_NORMALMODE)
 a_valueInUBBRH = (uint16)((F_CPU /(16*(config_ptr->baud_rate)))-1);
 #endif
@@ -54,14 +65,14 @@ UBRRL = (a_valueInUBBRH & 0x00FF);
 }
 void UART_sendByte(const uint8 a_data)
 {
-while(BIT_IS_CLEAR(UCSRA,UDRE));
+while(BIT_IS_CLEAR(UCSRA,5));
 UDR=a_data;
 
 }
 uint8 UART_recieveByte(void)
 {
 
-while(BIT_IS_CLEAR(UCSRA,RXC));
+while(BIT_IS_CLEAR(UCSRA,7));
 #if (UART_INTERRUPTMODE == 1)
 g_newRecepient=0;
 #endif
@@ -81,7 +92,7 @@ void UART_sendString(const uint8*str)
 
 
 }
-void UART_recieveString(uint8*const a_str)
+void UART_recieveString(uint8* a_str)
 {
 
 	sint8 i=-1;

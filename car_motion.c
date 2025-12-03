@@ -23,13 +23,13 @@ void Car_SetDirection(CAR_Direction direction, uint8 speed)
 
         case Forward:
         DcMotor_Rotate(DCMOTOR_ACW,speed,TIMER0);
-        DcMotor_Rotate(DCMOTOR_ACW,speed,TIMER2);
+        DcMotor_Rotate(DCMOTOR_CW,speed,TIMER2);
         last_direction = Forward;
         break;
 
         case Backward:
         DcMotor_Rotate(DCMOTOR_CW,speed,TIMER0);
-        DcMotor_Rotate(DCMOTOR_CW,speed,TIMER2);
+        DcMotor_Rotate(DCMOTOR_ACW,speed,TIMER2);
         last_direction = Backward;
         break;
 
@@ -41,7 +41,7 @@ void Car_SetDirection(CAR_Direction direction, uint8 speed)
 
         case Left:
         DcMotor_Rotate(DCMOTOR_STOP,speed,TIMER0);
-        DcMotor_Rotate(DCMOTOR_ACW,speed,TIMER2);
+        DcMotor_Rotate(DCMOTOR_CW,speed,TIMER2);
         last_direction = Left;
         break;
         default:

@@ -4,6 +4,7 @@
 #include "car_motion.h"
 #include "uart.h"
 #include "timer0.h"
+#include "gpio.h"
 #include "timer2.h"
 
 void init()
@@ -21,32 +22,33 @@ void init()
 int main()
 {
 	init();
-	CAR_Direction a_carDirection;
+	uint8 a_carDirection;
 
 
 	/*Infinite Loop*/
 	while(1)
 	{
+
+
 		a_carDirection = UART_recieveByte();
 				switch (a_carDirection)
 				{
-				case Forward:
+				case 'F':
 					Car_SetDirection(Forward, FULLSPEED);
 
 					break;
-				case Backward:
+				case 'B':
 					Car_SetDirection(Backward, FULLSPEED);
 					break;
-				case Right:
+				case 'R':
 					Car_SetDirection(Right, FULLSPEED);
 					break;
-				case Left :
+				case 'L' :
 					Car_SetDirection(Left, FULLSPEED);
 					break;
 
 				default :
 					Car_SetDirection(Stop, 0);
-					;
 
 				}
 
